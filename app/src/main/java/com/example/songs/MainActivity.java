@@ -1,12 +1,14 @@
 package com.example.songs;
 
 import android.Manifest;
+import android.content.Intent;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -50,6 +52,21 @@ public class MainActivity extends AppCompatActivity {
 
         db=FirebaseDatabase.getInstance().getReference("music");
         atrists=new ArrayList<>();
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                //get the artist
+                Atrist atrist=atrists.get(i);
+                //intent
+                Intent intent=new Intent(getApplicationContext(),ArtistActivity.class);
+
+                intent.putExtra("artistName",atrist.getArtistname());
+                intent.putExtra("artistId",atrist.getArtistId());
+
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
