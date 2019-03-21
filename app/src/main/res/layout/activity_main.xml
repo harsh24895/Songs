@@ -10,17 +10,26 @@
     app:layout_constraintLeft_toLeftOf="parent"
     app:layout_constraintRight_toRightOf="parent"
     tools:context=".MainActivity">
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:id="@+id/apppToolbar"
+        app:layout_constraintTop_toTopOf="parent"
+        android:elevation="5dp"
+        android:theme="@style/Base.ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.ActionBar"
+        android:background="@color/colorPrimary"></android.support.v7.widget.Toolbar>
 
     <android.support.v7.widget.CardView
+        android:id="@+id/card"
         android:layout_width="250dp"
         android:layout_height="300dp"
+        android:layout_marginTop="8dp"
         app:cardCornerRadius="8dp"
-        android:id="@+id/card"
-        android:layout_marginTop="25dp"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/apppToolbar">
 
         <EditText
             android:id="@+id/name"
@@ -31,15 +40,15 @@
 
         <Button
 
+            android:id="@+id/g"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:background="@color/colorPrimaryDark"
             android:onClick="searchlist"
-            android:layout_gravity="center"
             android:text="Search"
-            android:id="@+id/g"
 
-             />
+            />
 
         <Spinner
             android:id="@+id/spinner"
@@ -53,8 +62,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Name"
             android:layout_marginTop="185dp"
+            android:text="Name"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
 
@@ -62,25 +71,39 @@
             />
 
         <TextView
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="220dp"
             android:text="List of songs"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            android:layout_marginTop="220dp" />
+            app:layout_constraintRight_toRightOf="parent" />
     </android.support.v7.widget.CardView>
 
     <ListView
 
-            android:id="@+id/listView"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/card"
-            tools:layout_editor_absoluteX="8dp"
-            tools:layout_editor_absoluteY="230dp" />
+        android:id="@+id/listView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/card" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:onClick="Logoutpress"
+        app:backgroundTint="@color/colorPrimary"
+        app:fabSize="auto"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/ic_exit_to_app" />
+
+
 
 
     <!--<com.airbnb.lottie.LottieAnimationView-->

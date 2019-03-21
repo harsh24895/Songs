@@ -6,7 +6,10 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
@@ -15,6 +18,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -34,9 +38,13 @@ public class MainActivity extends AppCompatActivity {
     TextView textViewartist;
     TextView textViewartistGenre;
     ListView listView;
+    Toolbar toolbar;
 
 
     List<Atrist> atrists;
+
+    //this auth is for login and logout for user
+    FirebaseAuth firebaseAuthdb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,12 +54,23 @@ public class MainActivity extends AppCompatActivity {
         spinner=findViewById(R.id.spinner);
 
         listView=findViewById(R.id.listView);
+        toolbar=findViewById(R.id.apppToolbar);
+        setSupportActionBar(toolbar);
 
 
         //connection for db
 
         db=FirebaseDatabase.getInstance().getReference("music");
         atrists=new ArrayList<>();
+
+        firebaseAuthdb=FirebaseAuth.getInstance();
+
+        //if user is not login in app it will redirect to login page
+        if (firebaseAuthdb.getCurrentUser()==null){
+            finish();
+            startActivity(new Intent(getApplicationContext(),LoginActivity.class));
+        }
+
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -67,6 +86,25 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.menu_main,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch (item.getItemId()){
+            case R.id.action_main:
+                return true;
+            case R.id.action_person:
+                startActivity(new Intent(getApplicationContext(),AppBarActivity.class));
+                return true;
+                default:
+                    return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override
@@ -123,8 +161,12 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
+    public void Logoutpress(View view) {
+        //declare the firebaseauth for siging out from the firebase too
 
+        firebaseAuthdb.signOut();
+        finish();
+        startActivity(new Intent(getApplicationContext(),LoginActivity.class));
 
-
-
+    }
 }

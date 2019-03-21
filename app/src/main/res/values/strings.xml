@@ -7,4 +7,23 @@
         <item name="Dj">Dj</item>
         <item name="romantic">romantic></item>
     </array>
+    <string name="title_activity_login">Sign in</string>
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password (optional)</string>
+    <string name="action_sign_in">Sign in </string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
+    <string name="action_register">Don\'t have login credentials!!! Register here</string>
+
+    <string name="term_condition">Terms and Conditions Sample Generator
+Help protect your website and its users with clear and fair website terms and conditions. These terms and conditions for a website set out key issues such as acceptable use, privacy, cookies, registration and passwords, intellectual property, links to other sites, termination and disclaimers of responsibility. Terms and conditions are used and necessary to protect a website owner from liability of a user relying on the information or the goods provided from the site then suffering a loss. Making your own terms and conditions for your website is hard, not impossible, to do. It can take a few hours to few days for a person with no legal background to make. But worry no more; we are here to help you out All you need to do is fill up the blank spaces and then you will receive an email with your personalized terms and conditions. Also looking for a GDPR Privacy Policy? Check out gdprprivacynotice.co The accuracy of the generated document on this website is not legally binding. Use at your own risk.</string>
+    <string name="artists">Artists</string>
+    <string name="profile">Person</string>
 </resources>

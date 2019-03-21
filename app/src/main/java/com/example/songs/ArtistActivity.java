@@ -13,6 +13,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -32,6 +33,8 @@ public class ArtistActivity extends AppCompatActivity {
     DatabaseReference db;
     List<Track> tracks;
     ListView viewAdapter;
+
+    FirebaseAuth firebaseAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,7 +55,15 @@ public class ArtistActivity extends AppCompatActivity {
          * Imp part is this that the new child is created as "Track" and it is set in artist ID;
          *
          */
-        db= FirebaseDatabase.getInstance().getReference("music/"+artistId+"/tracks");
+//        if(firebaseAuth.getCurrentUser().getEmail()==null){
+//            startActivity(new Intent(getApplicationContext(),ArtistActivity.class));
+//            db= FirebaseDatabase.getInstance().getReference("tracks");
+//            tracks=new ArrayList<>();
+//        }else
+//        {
+//            startActivity(new Intent(getApplicationContext(),ArtistActivity.class));
+                db= FirebaseDatabase.getInstance().getReference("music/"+artistId+"/tracks");
+
         tracks=new ArrayList<>();
     }
 
