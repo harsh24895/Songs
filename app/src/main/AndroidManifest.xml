@@ -5,6 +5,12 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-feature android:name="android.hardware.camera" android:required="true"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    
+    
 
     <application
         android:allowBackup="true"
@@ -26,6 +32,15 @@
         <activity android:name=".RegisterActivity"></activity>
         <activity android:name=".ArtistActivity" />
         <activity android:name=".MainActivity" />
+        <provider
+            android:authorities="${applicationId}.provider"
+            android:name="android.support.v4.content.FileProvider"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths"/>
+        </provider>
     </application>
+    
 
 </manifest>
