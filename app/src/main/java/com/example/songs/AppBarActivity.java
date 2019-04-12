@@ -93,6 +93,12 @@ public class AppBarActivity extends AppCompatActivity {
     toolbar=findViewById(R.id.apppToolbar);
     setSupportActionBar(toolbar);
 
+        //display profile photo if avaiable like a simple hack
+
+        Uri profilephoto=user.getPhotoUrl();
+        if(profilephoto!=null){
+            LoadImageFromStorage(profilephoto.getPath());
+        }
 
     }
 
@@ -186,21 +192,48 @@ public class AppBarActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode,int resultCode, Intent data){
-        if(requestCode==REQUEST_TAKE_PHOTO&&resultCode==RESULT_OK){
-            Uri imageurl=Uri.parse(currentPhotopath);
-           // File file=new File(imageurl.getPath());
-
-            imageView.setImageURI(imageurl);
-            saveProfile(imageurl);
+//        if(requestCode==REQUEST_TAKE_PHOTO&&resultCode==RESULT_OK){
+//            Uri imageurl=Uri.parse(currentPhotopath);
+//           // File file=new File(imageurl.getPath());
+//
+//            imageView.setImageURI(imageurl);
+//            saveProfile(imageurl);
+//        }
+//
+//        //if you want load it from device and set the same image you selected as an profic picture
+//        else if(requestCode==REQUEST_LOAD_IMAGE&&resultCode==RESULT_OK){
+//
+//            Uri selectedImage=data.getData();
+//            imageView.setImageURI(selectedImage);
+//            saveProfile(selectedImage);
+//
+//        }
+        Uri imageUri=null;
+        if(requestCode==REQUEST_TAKE_PHOTO&& resultCode==RESULT_OK){
+            imageUri=Uri.parse(currentPhotopath);
+        }
+        else if(requestCode==REQUEST_LOAD_IMAGE&&resultCode==RESULT_OK){
+            imageUri=data.getData();
         }
 
-        //if you want load it from device and set the same image you selected as an profic picture
-        else if(requestCode==REQUEST_LOAD_IMAGE&&resultCode==RESULT_OK){
+        if(imageUri!=null){
+            //so it will display the image
+            imageView.setImageURI(imageUri);
 
-            Uri selectedImage=data.getData();
-            imageView.setImageURI(selectedImage);
-            saveProfile(selectedImage);
+            //save to local internal part
+            try {
+                Bitmap bitmapImage = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
+                String path = saveToInternalStorage(bitmapImage);
+                Uri.Builder builder = new Uri.Builder();
+                //This uri is for only app to store the photo
+                Uri newuri = builder.appendPath(path).build();
 
+
+                //now to save in firebase
+                saveProfile(newuri);
+            }catch (IOException e){
+                Toast.makeText(AppBarActivity.this,"Cannot save the Image",Toast.LENGTH_LONG).show();
+            }
         }
     }
 
@@ -244,8 +277,11 @@ public class AppBarActivity extends AppCompatActivity {
         File myPath=new File(directory,"profile.jpg");
         FileOutputStream fo=null;
 
+
+        //use the stream to write a copy of the image file
         try{
             fo=new FileOutputStream(myPath);
+            bitmap.compress(Bitmap.CompressFormat.PNG,100,fo);
         }
         catch(Exception e){
             Toast.makeText(AppBarActivity.this,"Could not save profile",Toast.LENGTH_LONG).show();
